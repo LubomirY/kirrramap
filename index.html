@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Карта</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    body, html { margin: 0; height: 100%; background: black; }
+    #app { display: flex; height: 100%; }
+    #map { flex: 1; background: black; }
+    #sidebar {
+      width: 320px;
+      background: #1a1a1a;
+      color: white;
+      padding: 15px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      display: none;
+      position: relative;
+    }
+    #sidebar h2 {
+      margin-top: 0;
+      font-family: "Times New Roman", serif;
+      font-size: 32px;    /* размер заголовка */
+      font-weight: bold;
+    }
+    #sidebar p {
+      font-family: "Calibri", sans-serif;
+      font-size: 25px;    /* размер описания */
+      line-height: 1.4;
+    }
+    #sidebar img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: none;      /* скрыт по умолчанию */
+    }
+    #closeBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    #closeBtn:hover { color: red; }
+
+    /* Иконки */
+    .map-icon img {
+      display: block;
+      transform-origin: center center; /* центрируем */
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="map"></div>
+    <div id="sidebar">
+      <button id="closeBtn">❌</button>
+      <h2 id="title"></h2>
+      <img id="image" src="" alt="">
+      <p id="desc"></p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // === 1. Карта ===
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -2,
+      maxZoom: 1
+    });
+
+    const w = 3500, h = 1200; // размеры карты
+    const bounds = [[0,0], [h,w]];
+    L.imageOverlay('map.png', bounds).addTo(map);
+    map.fitBounds(bounds);
+
+    // === 2. Данные меток ===
+    const points = [
+      {
+        coords: [210, 700],
+        title: "Лавочка",
+        img: "screenshots/benches/old_chapel_bench.png",
+        desc: "Старая капелла",
+        iconUrl: "icons/bench.png",
+        baseSize: [33, 37]
+      },
+      {
+        coords: [290, 850],
+        title: "Лавочка",
+        img: "screenshots/benches/bone_bottom_bench.png",
+        desc: "Костяная низина",
+        iconUrl: "icons/bench.png",
+        baseSize: [33, 37]
+      },
+      {
+        coords: [290, 900],
+        title: "Пебб",
+        img: "screenshots/npc/bone_bottom_shop.png",
+        desc: "Торговец костяной низины",
+        iconUrl: "icons/shop.png",
+        baseSize: [33, 36]
+      },
+      {
+        coords: [280, 1075],
+        title: "Кокон",
+        desc: "Шёлковый кокон с бусинами",
+        iconUrl: "icons/cocoon.png",
+        baseSize: [29, 44]
+      }
+    ];
+
+    const markers = [];
+
+    // === 3. Панель ===
+    const sidebar = document.getElementById("sidebar");
+    const titleEl = document.getElementById("title");
+    const imageEl = document.getElementById("image");
+    const descEl = document.getElementById("desc");
+    const closeBtn = document.getElementById("closeBtn");
+    closeBtn.addEventListener("click", () => { sidebar.style.display = "none"; });
+
+    // === 4. Создание DivIcon ===
+    function createDivIcon(p, scale=1) {
+      const w = p.baseSize[0] * scale;
+      const h = p.baseSize[1] * scale;
+      return L.divIcon({
+        className: 'map-icon',
+        html: `<img src="${p.iconUrl}" width="${w}" height="${h}">`,
+        iconSize: [w,h],
+        iconAnchor: [w/2, h/2] // центр по центру
+      });
+    }
+
+    // === 5. Добавляем маркеры ===
+    points.forEach((p, i) => {
+      const scale = 1 + map.getZoom() * 0.3;
+      const marker = L.marker(p.coords, { icon: createDivIcon(p, scale) }).addTo(map);
+      marker.on("click", () => {
+        sidebar.style.display = "block";
+        titleEl.textContent = p.title;
+        descEl.textContent = p.desc;
+
+        if (p.img) {
+          imageEl.src = p.img;
+          imageEl.alt = p.title;
+          imageEl.style.display = "block";
+        } else {
+          imageEl.style.display = "none";
+        }
+      });
+      markers.push(marker);
+    });
+
+    // === 6. Масштабирование иконок (линейное) ===
+    function updateIconScale() {
+      const scale = 1 + map.getZoom() * 0.3;
+      markers.forEach((m, i) => {
+        m.setIcon(createDivIcon(points[i], scale));
+      });
+    }
+    map.on('zoom', updateIconScale);
+
+    // === 7. Поиск координат (клик по карте) ===
+//map.on("click", (e) => {
+//  const coords = `${e.latlng.lat.toFixed(0)}, ${e.latlng.lng.toFixed(0)}`;
+//
+  // копируем в буфер
+//  navigator.clipboard.writeText(coords).then(() => {
+//    alert(`Координаты: ${coords}\n(скопированы в буфер обмена)`);
+//  }).catch(() => {
+//    alert(`Координаты: ${coords}\n(не удалось скопировать автоматически)`);
+//  });
+//});
+  </script>
+</body>
+</html>
