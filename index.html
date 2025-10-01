@@ -18,24 +18,9 @@
       display: none;
       position: relative;
     }
-    #sidebar h2 {
-      margin-top: 0;
-      font-family: "Times New Roman", serif;
-      font-size: 32px;    /* размер заголовка */
-      font-weight: bold;
-    }
-    #sidebar p {
-      font-family: "Calibri", sans-serif;
-      font-size: 25px;    /* размер описания */
-      line-height: 1.4;
-      white-space: pre-line; /* учитывает \n как перенос */
-    }
-    #sidebar img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin: 10px 0;
-      display: none;      /* скрыт по умолчанию */
-    }
+    #sidebar h2 { margin-top: 0; font-family: "Calibri", sans-serif; font-size: 32px; font-weight: bold; }
+    #sidebar p { font-family: "Calibri", sans-serif; font-size: 25px; line-height: 1.4; white-space: pre-line; }
+    #sidebar img { max-width: 100%; border-radius: 8px; margin: 10px 0; display: none; }
     #closeBtn {
       position: absolute;
       top: 10px;
@@ -47,12 +32,6 @@
       cursor: pointer;
     }
     #closeBtn:hover { color: red; }
-
-    /* Иконки */
-    .map-icon img {
-      display: block;
-      transform-origin: center center; /* центрируем */
-    }
   </style>
 </head>
 <body>
@@ -67,143 +46,43 @@
   </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="points.js"></script> <!-- массив точек -->
+
   <script>
     // === 1. Карта ===
-    const map = L.map('map', {
-      crs: L.CRS.Simple,
-      minZoom: -2,
-      maxZoom: 1
-    });
+    const map = L.map('map', { crs: L.CRS.Simple, minZoom: -2, maxZoom: 1 });
 
-    const w = 3500, h = 1200; // размеры карты
-    const bounds = [[0,0], [h,w]];
+    const w = 3500, h = 1200;
+    const bounds = [[0,0], [h,w]]; // верхний левый = 0,0
     L.imageOverlay('map.png', bounds).addTo(map);
     map.fitBounds(bounds);
 
-    // === 2. Данные меток ===
-    const points = [
-      {
-        coords: [210, 700],
-        title: "Скамейка",
-        img: "screenshots/benches/old_chapel_bench.png",
-        desc: "Старая капелла\n",
-        iconUrl: "icons/bench.png",
-        baseSize: [33, 37]
-      },
-      {
-        coords: [265, 825],
-        title: "Скамейка",
-        img: "screenshots/benches/bone_bottom_bench.png",
-        desc: "Костяная низина\n",
-        iconUrl: "icons/bench.png",
-        baseSize: [33, 37]
-      },
-      {
-        coords: [265, 885],
-        title: "Пебб",
-        img: "screenshots/npc/bone_bottom_shop.png",
-        desc: "Торговец костяной низины\n\nМагнит, осколок маски, простой ключ, руда, чётки",
-        iconUrl: "icons/shop.png",
-        baseSize: [33, 36]
-      },
-
-
-
-      {
-        coords: [257, 1186],
-        title: "Скамейка",
-        img: "screenshots/benches/marrow_1_bench.png",
-        desc: "Костяк (врата)\n",
-        iconUrl: "icons/bench.png",
-        baseSize: [33, 37]
-      },
-      {
-        coords: [320, 1307],
-        title: "Скамейка",
-        img: "screenshots/benches/marrow_flee_bench.png",
-        desc: "Блошиный караван\n",
-        iconUrl: "icons/bench.png",
-        baseSize: [33, 37]
-      },
-      {
-        coords: [384, 980],
-        title: "Скамейка",
-        img: "screenshots/benches/marrow_2_bench.png",
-        desc: "Костяк (Шакра)\n",
-        iconUrl: "icons/bench.png",
-        baseSize: [33, 37]
-      },
-      {
-        coords: [439, 1025],
-        title: "Скамейка",
-        img: "screenshots/benches/moss_druid_bench.png",
-        desc: "Мшистый друид\n",
-        iconUrl: "icons/bench.png",
-        baseSize: [33, 37]
-      },
-
-      {
-        coords: [406, 1138],
-        title: "Колокольный зверь",
-        img: "screenshots/bosses/bell_beast_boss.png",
-        desc: "Босс",
-        iconUrl: "icons/red.png",
-        baseSize: [36, 36]
-      },
-      {
-        coords: [320, 1344],
-        title: "Блошиный караван",
-        img: "screenshots/npc/marrow_flee_caravan.png",
-        desc: "Помогите найти и освободить потерявшихся блох",
-        iconUrl: "icons/flee.png",
-        baseSize: [33, 35]
-      },
-      {
-        coords: [285, 910],
-        title: "Шакра",
-        img: "screenshots/npc/bone_bottom_shakra.png",
-        desc: "Картограф\n\nИногда заглядывает в костяную низину",
-        iconUrl: "icons/shakra.png",
-        baseSize: [29, 33]
-      },
-
-
-
-      {
-        coords: [405, 1097],
-        title: "Кокон",
-        desc: "Шёлковый кокон с бусинами оставшийся на месте смерти",
-        iconUrl: "icons/cocoon.png",
-        baseSize: [29, 44]
-      }
-    ];
-
-    const markers = [];
-
-    // === 3. Панель ===
+    // === 2. Панель ===
     const sidebar = document.getElementById("sidebar");
-    const titleEl = document.getElementById("title");
     const imageEl = document.getElementById("image");
+    const titleEl = document.getElementById("title");
     const descEl = document.getElementById("desc");
     const closeBtn = document.getElementById("closeBtn");
     closeBtn.addEventListener("click", () => { sidebar.style.display = "none"; });
 
-    // === 4. Создание DivIcon ===
-    function createDivIcon(p, scale=1) {
-      const w = p.baseSize[0] * scale;
-      const h = p.baseSize[1] * scale;
-      return L.divIcon({
-        className: 'map-icon',
-        html: `<img src="${p.iconUrl}" width="${w}" height="${h}">`,
-        iconSize: [w,h],
-        iconAnchor: [w/2, h/2] // центр по центру
+    // === 3. Создание иконки с масштабом ===
+    function createIcon(p, scale = 1) {
+      return L.icon({
+        iconUrl: p.iconUrl,
+        iconSize: [70 * scale, 70 * scale],
+        iconAnchor: [35 * scale, 35 * scale]
       });
     }
 
-    // === 5. Добавляем маркеры ===
-    points.forEach((p, i) => {
-      const scale = 1 + map.getZoom() * 0.3;
-      const marker = L.marker(p.coords, { icon: createDivIcon(p, scale) }).addTo(map);
+    // === 4. Изначальные маркеры ===
+    const markers = points.map(p => {
+      const initialScale = Math.pow(2, map.getZoom() - 1); // на 1 уровень меньше карты
+
+      // Инвертируем y, чтобы верх карты = 0
+      const invertedCoords = [h - p.coords[0], p.coords[1]];
+
+      const marker = L.marker(invertedCoords, { icon: createIcon(p, initialScale) }).addTo(map);
+
       marker.on("click", () => {
         sidebar.style.display = "block";
         titleEl.textContent = p.title;
@@ -217,32 +96,18 @@
           imageEl.style.display = "none";
         }
       });
-      markers.push(marker);
+
+      return marker;
     });
 
-    // === 6. Масштабирование иконок (линейное) ===
-    function updateIconScale() {
-      const scale = 1 + map.getZoom() * 0.3;
-      markers.forEach((m, i) => {
-        m.setIcon(createDivIcon(points[i], scale));
+    // === 5. Масштабирование маркеров при изменении зума карты ===
+    map.on("zoomend", () => {
+      const currentZoom = map.getZoom();
+      const scale = Math.pow(2, currentZoom - 1); // всегда на 1 уровень меньше карты
+      markers.forEach((marker, i) => {
+        marker.setIcon(createIcon(points[i], scale));
       });
-    }
-    map.on('zoom', updateIconScale);
-
-    // === 7. Поиск координат (клик по карте) ===
-//map.on("click", (e) => {
-//  const coords = `${e.latlng.lat.toFixed(0)}, ${e.latlng.lng.toFixed(0)}`;
-//
-  // копируем в буфер
-//  navigator.clipboard.writeText(coords).then(() => {
-//    alert(`Координаты: ${coords}\n(скопированы в буфер обмена)`);
-//  }).catch(() => {
-//    alert(`Координаты: ${coords}\n(не удалось скопировать автоматически)`);
-//  });
-//});
+    });
   </script>
 </body>
 </html>
-
-
-
