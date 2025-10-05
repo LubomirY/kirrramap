@@ -77,7 +77,7 @@ const points = [
     coords: [880, 1333],
     title: "Блошиный караван",
     img: "screenshots/npc/marrow_flee_caravan.png",
-    desc: "Помогите найти и освободить потерявшихся блох\nСпасено: 0/5",
+    desc: "Помогите найти и освободить потерявшихся блох\nСпасено: 1/5",
     iconUrl: "icons/caravan.png"
   },
   {
@@ -96,27 +96,22 @@ const points = [
   {
     coords: [806, 718],
     title: "Неосмотренный проход",
-    desc: "",
+    desc: "Чтоб попасть на другую сторону, нужен рывок",
     iconUrl: "icons/missed_area.png"
   },
 
   {
     coords: [1030, 897],
     title: "Дверь в виде ткача",
+    img: "screenshots/other/moss_needolin_door.png",
     desc: "Перед ней расположен музыкальный инструмент со струнами из шёлка",
     iconUrl: "icons/needolin_door.png"
   },
 
   {
-    coords: [890, 950],
-    title: "Неосмотренный проход",
-    desc: "",
-    iconUrl: "icons/missed_upgrade.png"
-  },
-  {
     coords: [699, 1245],
     title: "Неосмотренная комната",
-    desc: "",
+    desc: "Ты так и не дошла на верх, а там кто-то плакал...",
     iconUrl: "icons/missed_misc.png"
   },
 
@@ -124,6 +119,7 @@ const points = [
     coords: [713, 1294],
     title: "Необходима клешня",
     desc: "",
+    img: "screenshots/secrets/moss_needolin_door.png",
     iconUrl: "icons/claw_tool.png"
   },
   {
@@ -151,6 +147,7 @@ const points = [
   {
     coords: [836, 1679],
     title: "Скарр-страж",
+    img: "screenshots/bosses/scarrgard.png",
     desc: "Минибосс",
     iconUrl: "icons/hunt.png"
   },
