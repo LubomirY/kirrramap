@@ -1,5 +1,8 @@
 const points = [
-//moss grounds
+
+
+
+// MOSS GROUNDS
   {
     coords: [989, 696],
     title: "Скамейка",
@@ -25,12 +28,20 @@ const points = [
     coords: [917, 917],
     title: "Пебб",
     img: "screenshots/npc/bone_bottom_shop.png",
-    desc: "Торговец костяной низины\n\nПродаёт: магнит, осколок маски, простой ключ, руда, чётки",
+    desc: "Торговец костяной низины\n\nПродаёт:\nМагнит (инструмент);\nОсколок маски;\nПростой ключ;\nРемесленный метал (для создания инструментоы);\nЧётки (60 за 80)",
     iconUrl: "icons/shop.png"
+  },
+  {
+    coords: [761, 1035],
+    title: "Скамейка",
+    img: "screenshots/benches/moss_druid_bench.png",
+    desc: "Мшистый друид\n",
+    iconUrl: "icons/bench.png"
   },
 
 
-//the marrow
+
+// THE MARROW
   {
     coords: [943, 1188],
     title: "Скамейка",
@@ -46,16 +57,9 @@ const points = [
     iconUrl: "icons/bench.png"
   },
   {
-    coords: [761, 1035],
-    title: "Скамейка",
-    img: "screenshots/benches/moss_druid_bench.png",
-    desc: "Мшистый друид\n",
-    iconUrl: "icons/bench.png"
-  },
-  {
     coords: [792, 1157],
     title: "Звонкий путь",
-    img: "screenshots/bosses/bell_beast_boss.png",
+    img: "screenshots/bellway/marrow_bellway.png",
     desc: "Средство быстрого передвижения",
     iconUrl: "icons/bellway.png"
   },
@@ -89,7 +93,49 @@ const points = [
   },
 
 
-// deap docks
+
+// DEAP DOCKS
+  {
+    coords: [878, 1920],
+    title: "Скамейка",
+    img: "screenshots/benches/deap_docks_1_bench.png",
+    desc: "Глубокие доки (вход)",
+    iconUrl: "icons/bench.png"
+  },
+  {
+    coords: [987, 1890],
+    title: "Звонкий путь",
+    img: "screenshots/bellway/marrow_bellway.png",
+    desc: "Средство быстрого передвижения",
+    iconUrl: "icons/bellway.png"
+  },
+  {
+    coords: [1009, 2057],
+    title: "Скамейка",
+    img: "screenshots/benches/deap_docks_2_bench.png",
+    desc: "Глубокие доки (кузня)",
+    iconUrl: "icons/bench.png"
+  },
+  {
+    coords: [1007, 2123],
+    title: "Дочь кузни",
+    img: "screenshots/npc/deap_docks_forge_daughter.png",
+    desc: "Торговец (кузнец)\n\nПродаёт:\nОсколок жала (инструмент аля колючки);\nНабор умельца (увеличение урона инструментов);\nНабор осколков",
+    iconUrl: "icons/shop.png"
+  },
+
+
+
+// FAR FIELDS
+  {
+    coords: [870, 2309],
+    title: "Скамейка",
+    img: "screenshots/benches/far_fields_1_bench.png",
+    desc: "Дальние поля",
+    iconUrl: "icons/bench.png"
+  },
+
+
 
 
 // secrets
@@ -121,12 +167,6 @@ const points = [
     iconUrl: "icons/claw_area.png"
   },
 
-  {
-    coords: [942, 1777],//949, 1788
-    title: "Неосмотренный пороход",
-    desc: "",
-    iconUrl: "icons/missed_area.png"
-  },
 
 
 //other
@@ -135,6 +175,20 @@ const points = [
     title: "Скарр-страж",
     img: "screenshots/bosses/scarrgard.png",
     desc: "Минибосс",
+    iconUrl: "icons/hunt.png"
+  },
+  {
+    coords: [793, 638],
+    title: "Скальнер",
+    img: "screenshots/bosses/сraggler.png",
+    desc: "Минибосс (необязательный)",
+    iconUrl: "icons/hunt.png"
+  },
+  {
+    coords: [965, 2098],
+    title: "Лейс",
+    img: "screenshots/bosses/lace1.png",
+    desc: "Босс (важный, сюжетный)",
     iconUrl: "icons/hunt.png"
   },
 ];
