@@ -94,27 +94,13 @@ const points = [
 
 // secrets
   {
-    coords: [806, 718],
-    title: "Неосмотренный проход",
-    desc: "Чтоб попасть на другую сторону, нужен рывок",
-    iconUrl: "icons/missed_area.png"
-  },
-
-  {
     coords: [1030, 897],
     title: "Дверь в виде ткача",
     img: "screenshots/other/moss_needolin_door.png",
     desc: "Перед ней расположен музыкальный инструмент со струнами из шёлка",
     iconUrl: "icons/needolin_door.png"
   },
-
-  {
-    coords: [699, 1245],
-    title: "Неосмотренная комната",
-    desc: "Ты так и не дошла на верх, а там кто-то плакал...",
-    iconUrl: "icons/missed_misc.png"
-  },
-
+  
   {
     coords: [713, 1294],
     title: "Необходима клешня",
